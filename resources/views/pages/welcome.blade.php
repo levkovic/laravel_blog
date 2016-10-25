@@ -18,7 +18,7 @@
 
     <div class="post">
       <h3>{{ $post->title }}</h3>
-      <p>{{ substr($post->body, 0, 10) }}{{ strlen($post->body) > 10 ? '.....' : '' }}</p>
+      <p>{{ substr($post->body, 0, 250) }}{{ strlen($post->body) > 10 ? '...' : '' }}</p>
       <a href="{{ url('blog/' . $post->slug) }}" class="btn btn-primary">Read More</a>
     </div>
 
@@ -30,4 +30,13 @@
     <h2>Sidebar</h2>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="text-center">
+      {!! $posts->links() !!}
+    </div>
+  </div>
+</div>
+
 @endsection
