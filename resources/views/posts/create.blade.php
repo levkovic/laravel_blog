@@ -25,7 +25,7 @@
 			{!! Form::label('body', 'Post Body:') !!}
 			{!! Form::textarea('body', null, array('class' => 'form-control', 'required' => '')) !!}
 
-			{!! Form::submit('Create Post', array('class' => 'btn btn-success btn-lg btn-block', 'style' => 'margin-top: 20px;')) !!}
+			{!! Form::submit('Create Post', array('class' => 'btn btn-success btn-lg btn-block btn-h1-spacing')) !!}
     		
 			{!! Form::close() !!}
 		</div>
