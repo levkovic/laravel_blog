@@ -9,6 +9,14 @@
 		<h1>{{ $post->title }}</h1>
 
 		<p class='lead'>{{ $post->body }}</p>
+
+		<hr>
+		
+		<div class='tags'>
+		@foreach($post->tags as $tag)
+			<span class="label label-default">{{ $tag->name }}</span>
+		@endforeach
+		</div>
 	</div>
 
 	<div class='col-md-4'>
@@ -18,6 +26,9 @@
 				<p><a href="{{ route('blog.single', $post->slug) }}">
 				{{ route('blog.single', $post->slug) }}
 				</a></p>
+				<dl class='dl-horizontal'>
+				<label>Category:</label>
+				<p>{{ $post->category->name }}</p>
 			</dl>
 				<label>Create At:</label>
 				<p>{{ date('M j, Y H:i', strtotime($post->created_at)) }}</p>
