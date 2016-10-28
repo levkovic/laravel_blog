@@ -36,6 +36,10 @@
 
         <a href="{{ route('login') }}" class ="btn btn-default btn-auth-spacing">Login</a>
 
+        
+
+        <a href="{{ route('register') }}" class ="btn btn-default btn-auth-spacing">Registration</a>
+
         @endif
 
       </ul>
