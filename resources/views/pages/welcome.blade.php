@@ -19,7 +19,12 @@
     <div class="post">
       <h3>{{ $post->title }}</h3>
       <p>{{ substr($post->body, 0, 250) }}{{ strlen($post->body) > 10 ? '...' : '' }}</p>
-      <a href="{{ url('blog/' . $post->slug) }}" class="btn btn-primary">Read More</a>
+              @foreach($post->tags as $tag)
+                <span class="label label-default">{{$tag->name}}</span>
+              @endforeach
+              <br>
+      <a href="{{ url('blog/' . $post->slug) }}" class="
+      btn btn-primary btn-auth-spacing">Read More</a>
     </div>
 
     <hr>

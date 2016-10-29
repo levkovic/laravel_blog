@@ -10,6 +10,7 @@ return array(
     'AddSlugToPosts' => $baseDir . '/database/migrations/2016_10_23_182410_add_slug_to_posts.php',
     'CategoriesTableSeeder' => $baseDir . '/database/seeds/CategoriesTableSeeder.php',
     'CreateCategoriesTable' => $baseDir . '/database/migrations/2016_10_26_153736_create_categories_table.php',
+    'CreateCommentsTable' => $baseDir . '/database/migrations/2016_10_28_141043_create_comments_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePostTagTable' => $baseDir . '/database/migrations/2016_10_27_134111_create_post_tag_table.php',
     'CreatePostsTable' => $baseDir . '/database/migrations/2016_10_20_000756_create_posts_table.php',
