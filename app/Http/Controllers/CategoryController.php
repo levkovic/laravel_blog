@@ -11,6 +11,8 @@ use Session;
 class CategoryController extends Controller
 {
     public function __construct(){
+        //don't allow not authorised users to access 'tags' route
+        //redirect to 'auth/login'
         $this->middleware('auth');
     }
 
@@ -47,7 +49,6 @@ class CategoryController extends Controller
         $category = new Category;
 
         $category->name = $request->name;
-
         $category->save();
 
         Session::flash('success', 'New Category has been created');

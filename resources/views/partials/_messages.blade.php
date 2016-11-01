@@ -2,7 +2,7 @@
 
 	<div class="alert alert-success" role='alert'>
 		
-	<strong>Success: </strong>{{ Session::get('success') }}
+		<strong>Success: </strong>{{ Session::get('success') }}
 
 	</div>
 
@@ -12,12 +12,15 @@
 
 	<div class="alert alert-danger" role='alert'>
 		
-	<strong>Errors: </strong>{{ Session::get('success') }}
-	<ul>
-	@foreach($errors->all() as $error)
-		<li>{{ $error  }}</li>
-	@endforeach
-	</ul>
+		<strong>Errors: </strong>{{ Session::get('success') }}
+		<ul>
+
+			@foreach($errors->all() as $error)
+				<li>{{ $error  }}</li>
+			@endforeach
+		
+		</ul>
+
 	</div>
 
 @endif

@@ -39,18 +39,23 @@ class CommentsController extends Controller
      */
     public function store(Request $request, $post_id)
     {
+        //server side validation
         $this->validate($request, array(
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
             'comment' => 'required|min:5|max:2000' 
             ));
-
+        
         $post = Post::find($post_id);    
+
         $comment = new Comment();
         $comment->name = $request->name;
         $comment->email = $request->email;
         $comment->comment = $request->comment;
         $comment->approved = true;
+
+        //When updating a belongsTo relationship (Comment model belongs to Post model), you may use the associate method.
+        //This method will set the foreign key(Post) on the child model (Comments)
         $comment->post()->associate($post);
 
         $comment->save();
@@ -79,7 +84,9 @@ class CommentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comment = Comment::find($id);
+
+        return view('comments.edit')->withComment($comment);
     }
 
     /**
@@ -91,7 +98,17 @@ class CommentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $comment = Comment::find($id);
+
+        $this->validate($request, array('comment' => 'required'));
+
+        $comment->comment = $request->comment;
+
+        $comment->save();
+
+        Session::flash('success', 'Comment updated');
+
+        return redirect()->route('posts.show', $comment->post->id);
     }
 
     /**

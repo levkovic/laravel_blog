@@ -4,6 +4,7 @@
 
 @section('content')
 
+<!-- model binding of the form -->
 	{{ Form::model($tag, ['route' => ['tags.update', $tag->id], 'method' => 'PUT']) }}
 
 		{{ Form::label('name', "Title:") }}

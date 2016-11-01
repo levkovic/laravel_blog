@@ -11,6 +11,8 @@ use Session;
 class TagController extends Controller
 {
     public function __construct(){
+        //don't allow not authorised users to access 'tags' route
+        //redirect to 'auth/login'
         $this->middleware('auth');
     }
     /**
@@ -21,6 +23,7 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::all();
+
         return view('tags.index')->withTags($tags);
     }
 
@@ -55,6 +58,7 @@ class TagController extends Controller
     public function show($id)
     {
         $tag = Tag::find($id);
+
         return view('tags.show')->withTag($tag);
     }
 
@@ -67,6 +71,7 @@ class TagController extends Controller
     public function edit($id)
     {
         $tag = Tag::find($id);
+
         return view('tags.edit')->withTag($tag);
     }
 
@@ -99,6 +104,7 @@ class TagController extends Controller
     public function destroy($id)
     {
         $tag = Tag::find($id);
+        //destroy relations between tag and posts
         $tag->posts()->detach();
 
         $tag->delete();

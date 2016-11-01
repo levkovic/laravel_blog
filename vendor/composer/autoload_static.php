@@ -301,6 +301,7 @@ class ComposerStaticInite8bb95d7cde00c3ff2940e7e4438e394
         'AddSlugToPosts' => __DIR__ . '/../..' . '/database/migrations/2016_10_23_182410_add_slug_to_posts.php',
         'CategoriesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CategoriesTableSeeder.php',
         'CreateCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_26_153736_create_categories_table.php',
+        'CreateCommentsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_28_141043_create_comments_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreatePostTagTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_27_134111_create_post_tag_table.php',
         'CreatePostsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_20_000756_create_posts_table.php',

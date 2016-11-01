@@ -13,6 +13,8 @@ use Session;
 class PostController extends Controller
 {
     public function __construct(){
+        //don't allow not authorised users to access 'tags' route
+        //redirect to 'auth/login'
         $this->middleware('auth');
     }
     /**
@@ -23,6 +25,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::orderBy('id', 'desc')->paginate(10);
+
         return view('posts.index')-> withPosts($posts);
     }
 
@@ -33,7 +36,9 @@ class PostController extends Controller
      */
     public function create()
     {
+        //get all categories
         $categories = Category::all();
+        //get all tags
         $tags = Tag::all();
 
         return view('posts.create')->withCategories($categories)->withTags($tags);
@@ -63,6 +68,7 @@ class PostController extends Controller
 
         $post->save();
 
+        //assosiate tags with post, false mean to add not overwrite
         $post->tags()->sync($request->tags, false);
 
         Session::flash('success', 'The post was successfully save!');
@@ -79,6 +85,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id); 
+
         return view('posts.show')->withPost($post);
     }
 
@@ -91,15 +98,17 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+
         $categories = Category::all();
-        
         $cats = array();
+        //storing names of categories into cats[]
         foreach ($categories as $category) {
             $cats[$category->id] = $category->name;
         }
 
         $tags = Tag::all();
         $tags2 = array();
+        //storing names of tags into tags2[]
         foreach ($tags as $tag) {
             $tags2[$tag->id] = $tag->name;
         }
@@ -118,6 +127,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 
+        //if slug isn't changed, don't validate
         if($request->input('slug') == $post->slug){
             $this->validate($request, array(
                 'title' => 'required|max:255',
@@ -140,12 +150,13 @@ class PostController extends Controller
         $post->body = $request->input('body');
 
         $post->save();
+
+        //if tags are set rewrite
         if (isset($request->tags)) {
             $post->tags()->sync($request->tags, true);
         }else{
             $post->tags()->sync(array());        
         }
-        
 
         Session::flash('success', 'This post was successfully saved.');
 
@@ -161,6 +172,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+        //destroy relations between post and tag
         $post->tags()->detach();
 
         $post->delete();

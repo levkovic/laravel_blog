@@ -5,23 +5,27 @@
 @section('content')
 
 	<div class="row">
+
 		<div class="col-md-8 col-md-offset-2">
 			<h1>{{ $post->title }}</h1>
 			<p>{{ $post->body }}</p>
 		</div>
+
 	</div>
 
 	<div class="row">
+
 		<div class="col-md-8 col-md-offset-2">
-		<h3 class="comments-title">{{ $post->comments()->count() }} Comments:</h3>
+
+		<h3 class="comments-title"><span class="margin-right glyphicon glyphicon-comment"></span>{{ $post->comments()->count() }} Comments:</h3>
 			@foreach($post->comments as $comment)
 
 				<div class="comment">
 					<div class="author-info">
-						<img src="" class="author-image">
+						<img src="{{ "https://www.gravatar.com/avatar/" . md5(strtolower(trim($comment->email))) . "?s=50&d=mm" }}" class="author-image">
 						<div class="author-name">
 							<h4>{{ $comment->name }}</h4>
-							<p class="author-time">{{ $comment->created_at }}</p>
+							<p class="author-time">{{ date("F nS, Y - G:i",strtotime($comment->created_at)) }}</p>
 						</div>
 					</div>
 
