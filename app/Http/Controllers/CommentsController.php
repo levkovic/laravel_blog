@@ -5,17 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Category;
+use App\Comment;
+use App\Post;
 use Session;
 
-class CategoryController extends Controller
+class CommentsController extends Controller
 {
-    public function __construct(){
-        //don't allow not authorised users to access 'tags' route
-        //redirect to 'auth/login'
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +18,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-
-        return view('categories.index')->withCategories($categories);
+        //
     }
 
     /**
@@ -33,6 +26,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -40,20 +37,32 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $post_id)
     {
+        //server side validation
         $this->validate($request, array(
-            'name' => 'required|max:255'
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'comment' => 'required|min:5|max:2000' 
             ));
+        
+        $post = Post::find($post_id);    
 
-        $category = new Category;
+        $comment = new Comment();
+        $comment->name = $request->name;
+        $comment->email = $request->email;
+        $comment->comment = $request->comment;
+        $comment->approved = true;
 
-        $category->name = $request->name;
-        $category->save();
+        //When updating a belongsTo relationship (Comment model belongs to Post model), you may use the associate method.
+        //This method will set the foreign key(Post) on the child model (Comments)
+        $comment->post()->associate($post);
 
-        Session::flash('success', 'New Category has been created');
+        $comment->save();
 
-        return redirect()->route('categories.index');
+        Session::flash('success', 'Comment was added!');
+
+        return redirect()->route('blog.single', [$post->slug]); 
     }
 
     /**
@@ -75,7 +84,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comment = Comment::find($id);
+
+        return view('comments.edit')->withComment($comment);
     }
 
     /**
@@ -87,7 +98,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $comment = Comment::find($id);
+
+        $this->validate($request, array('comment' => 'required'));
+
+        $comment->comment = $request->comment;
+
+        $comment->save();
+
+        Session::flash('success', 'Comment updated');
+
+        return redirect()->route('posts.show', $comment->post->id);
     }
 
     /**
