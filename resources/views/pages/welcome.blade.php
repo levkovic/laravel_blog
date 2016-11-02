@@ -6,7 +6,7 @@
 
         <div class="col-md-12">
 
-        <div class="jumbotron">
+        <div class="jumbotron hiden">
             <h1>Welcome to My Blog!</h1>
 
             <p class="lead">Thank you for visiting.</p>
